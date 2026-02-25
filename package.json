@@ -1,0 +1,29 @@
+{
+  "name": "crypto-lib-ts",
+  "version": "1.0.0",
+  "description": "A library containing the most popular/most essential components of nowadays cryptography",
+  "main": "index.ts",
+  "scripts": {
+    "test": "",
+    "install": "",
+    "start": "tsx index.ts",
+    "dev":"tsx index.ts"
+  },
+  "keywords": [
+    "cryptography",
+    "ciphers",
+    "hash-function",
+    "signature-algorithm",
+    "SHA",
+    "crypto",
+    "assymetric cryptography",
+    "symmetric cryptography"
+  ],
+  "author": "Luftie The Anonymous",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^6.2.2",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0"
+  }
+}
