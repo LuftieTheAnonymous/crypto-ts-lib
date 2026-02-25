@@ -1,27 +1,45 @@
-class modularMath{
+export type OperandType = number | bigint;
+
+export class modularMath{
 
 
 constructor(){}
 
-static toBigInt(a:number | bigint):bigint{
+static toBigInt(a:OperandType):bigint{
     return BigInt(a);
 }
 
 static toInteger(a:bigint){
-    return Number(a);
+    return Math.floor(Number(a));
 }
 
-static add2Points(a:bigint | number, b:bigint | number, fieldLength:bigint | number):bigint{
-return (this.toBigInt(a) + this.toBigInt(b)) % this.toBigInt(fieldLength);
-}
-
-
-static multiply2PointsInField(a:bigint | number, b:bigint | number, fieldLength:bigint | number):bigint{
-    return (this.toBigInt(a) * this.toBigInt(b)) % this.toBigInt(fieldLength); 
+static add2Points(input:OperandType[], modulus:OperandType):bigint{
+    if(input.length < 2) throw new Error("Cannot be empty or 1 element in the set provided.");
+return this.toBigInt(input.reduce((a,b)=> this.toBigInt(a) + this.toBigInt(b),0))  % this.toBigInt(modulus);
 }
 
 
+static multiply2PointsInField(input:OperandType[], modulus:OperandType):bigint{
+     if(input.length < 2) throw new Error("Cannot be empty or 1 element in the set provided.");
+    return this.toBigInt(input.reduce((a,b)=> this.toBigInt(a) * this.toBigInt(b),0)) % this.toBigInt(modulus); 
+}
+
+static XOR(input:OperandType[] | OperandType):bigint{
+const modulus =this.toBigInt(2);
+if (typeof input === 'object') return BigInt(input.reduce((a,b)=> this.toBigInt(a) + this.toBigInt(b),0)) % modulus;
+
+return this.toBigInt(input) % modulus;
+}
+
+static getGCD(){
+    // to be implemented
+}
+
+
+static EEA(){}
+
 
 }
 
-console.log(modularMath.toInteger(modularMath.add2Points(2, 5, 3)));
+
+console.log(modularMath.XOR(35));

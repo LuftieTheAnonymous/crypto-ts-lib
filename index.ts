@@ -1,1 +1,7 @@
-console.log("Start Crypto Journey here !");
+import { modularMath } from "./utilities/modularMaths";
+
+
+
+export {
+    modularMath,
+}
