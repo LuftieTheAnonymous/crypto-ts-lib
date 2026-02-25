@@ -31,15 +31,27 @@ if (typeof input === 'object') return BigInt(input.reduce((a,b)=> this.toBigInt(
 return this.toBigInt(input) % modulus;
 }
 
-static getGCD(){
-    // to be implemented
+static getGCD(a:OperandType, b:OperandType,outputType?: "bigint" | "integer"):OperandType
+{
+  while (b !== 0) {
+    const temp = b;
+    b = this.toBigInt(a) % this.toBigInt(b);
+    a = temp;
+  }
+
+    if(!outputType || outputType === 'bigint') return a;
+
+    return this.toInteger(this.toBigInt(a));
 }
 
 
-static EEA(){}
+static EEA(){
+    // To be implemented !
+}
 
 
 }
 
 
 console.log(modularMath.XOR(35));
+console.log(modularMath.getGCD(22, 22,"integer"));
