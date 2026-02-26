@@ -9,8 +9,13 @@ static toBigInt(a:OperandType):bigint{
     return BigInt(a);
 }
 
-static toInteger(a:bigint){
+static toInteger(a:OperandType){
     return Math.floor(Number(a));
+}
+
+static modulo(operand:OperandType, modulus:OperandType, output?:'integer' | 'bigint'):OperandType{
+    if(!output || output === 'bigint') return this.toBigInt(operand) % this.toBigInt(modulus);
+    return this.toInteger(operand) % this.toInteger(modulus);    
 }
 
 static add2Points(input:OperandType[], modulus:OperandType):bigint{
@@ -33,15 +38,17 @@ return this.toBigInt(input) % modulus;
 
 static getGCD(a:OperandType, b:OperandType,outputType?: "bigint" | "integer"):OperandType
 {
+a = this.toInteger(a);
+b = this.toInteger(b);
+
   while (b !== 0) {
     const temp = b;
-    b = this.toBigInt(a) % this.toBigInt(b);
+    b = this.toInteger(this.modulo(a,b,outputType));
     a = temp;
   }
 
-    if(!outputType || outputType === 'bigint') return a;
-
-    return this.toInteger(this.toBigInt(a));
+    if(!outputType || outputType === 'bigint') return this.toBigInt(a);
+   else return this.toInteger(a);
 }
 
 
@@ -52,6 +59,3 @@ static EEA(){
 
 }
 
-
-console.log(modularMath.XOR(35));
-console.log(modularMath.getGCD(22, 22,"integer"));
