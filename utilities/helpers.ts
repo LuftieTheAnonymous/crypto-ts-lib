@@ -30,8 +30,8 @@ let result:StringToBinaryOutput={
     text:'',
 };
 
-let letterASCI = input.charCodeAt(letterIndex); // FLAWED PART
 while(input.length > letterIndex){
+    let letterASCI = input.charCodeAt(letterIndex); 
     let binaryResult = this.turnIntoBinary(letterASCI);
     result.binaryArray.push(modularMath.toInteger(binaryResult));
     result.text += binaryResult;
@@ -71,11 +71,3 @@ return result;
 }
 
 }
-console.log(Helpers.turnBinaryToDecimal(1100));
-console.log(Helpers.turnBinaryToDecimal(1111110));
-
-const textTobinary = Helpers.turnStringIntoBinary("Hello");
-
-console.log(textTobinary.binaryArray);
-
-console.log(Helpers.turnBinaryToString(textTobinary.binaryArray));
