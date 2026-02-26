@@ -18,13 +18,13 @@ static modulo(operand:OperandType, modulus:OperandType, output?:'integer' | 'big
     return this.toInteger(operand) % this.toInteger(modulus);    
 }
 
-static add2Points(input:OperandType[], modulus:OperandType):bigint{
+static addOperandsModulo(input:OperandType[], modulus:OperandType):bigint{
     if(input.length < 2) throw new Error("Cannot be empty or 1 element in the set provided.");
 return this.toBigInt(input.reduce((a,b)=> this.toBigInt(a) + this.toBigInt(b),0))  % this.toBigInt(modulus);
 }
 
 
-static multiply2PointsInField(input:OperandType[], modulus:OperandType):bigint{
+static multiplyOperandsModulo(input:OperandType[], modulus:OperandType):bigint{
      if(input.length < 2) throw new Error("Cannot be empty or 1 element in the set provided.");
     return this.toBigInt(input.reduce((a,b)=> this.toBigInt(a) * this.toBigInt(b),0)) % this.toBigInt(modulus); 
 }
@@ -48,7 +48,7 @@ b = this.toInteger(b);
   }
 
     if(!outputType || outputType === 'bigint') return this.toBigInt(a);
-   else return this.toInteger(a);
+     return this.toInteger(a);
 }
 
 
@@ -58,4 +58,5 @@ static EEA(){
 
 
 }
+
 
