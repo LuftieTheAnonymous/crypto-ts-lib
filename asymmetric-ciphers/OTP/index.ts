@@ -1,3 +1,4 @@
+import { Helpers } from "../../utilities/helpers";
 import { modularMath, OperandType } from "../../utilities/modularMaths";
 
 type OTPInput = string | OperandType;
@@ -5,27 +6,19 @@ type OTPInput = string | OperandType;
 class OTP{
     constructor(){}
 
-    private generateKey(){}
+    static private generateKey(keyLength:number){
+        const randomGeneratedKey = crypto.getRandomValues();
+    }
 
     static encrypt(input:OTPInput){
-// let isString:boolean = typeof input === 'string' ? true : false;
-// let loopCondition = typeof input === 'string' ? input.length : modularMath.toInteger(input);
-// let result:string="";
 
-// for (let index = 0; index < loopCondition; index++) {  
-//     if(isString){
-//         const character:string = (input as string)[index];
+        const generateKeyInput = typeof input === 'string' ? input.length : Helpers.turnIntoBinary(modularMath.toInteger(input)).length;
+        const keyGenerated = this.generateKey();
 
 
-
-
-
-//     }else{
-
-//     }
-}
-
+    }
 
 static decrypt(input:OperandType, ouputType: 'string' | 'bigint' | 'integer'):OTPInput{}
-    }
+
+}
 

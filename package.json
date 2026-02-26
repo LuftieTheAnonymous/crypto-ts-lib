@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "A library containing the most popular/most essential components of nowadays cryptography",
   "main": "index.ts",
+  "type": "module",
   "scripts": {
-    "test": "mocha 'tests/**/*.test.ts'",
-    "install": "",
+    "build": "tsc",
+     "test": "tsx --test 'tests/**/*.test.ts'",
+    "test:file": "tsx tests/utilities/index.test.ts",
     "start": "tsx index.ts",
     "dev": "tsx index.ts"
   },
@@ -26,7 +28,11 @@
     "@types/mocha": "^10.0.10",
     "chai": "^6.2.2",
     "mocha": "^11.7.5",
+    "tsc": "^2.0.4"
+  },
+  "devDependencies": {
     "ts-node": "^10.9.2",
-    "tsx": "^4.21.0"
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   }
 }

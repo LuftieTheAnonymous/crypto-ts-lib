@@ -1,15 +1,25 @@
 export type OperandType = number | bigint;
 
+export type BigIntCompliance = string | number | boolean | bigint;
+
 export class modularMath{
 
 
 constructor(){}
 
-static toBigInt(a:OperandType):bigint{
-    return BigInt(a);
+static toBigInt<T>(a:T):bigint{
+    if(typeof a === 'string') throw new Error("Wrong type of data provided, the element is Not a number");
+    
+    const turnedNumber =  BigInt(a as BigIntCompliance);
+
+    return BigInt(turnedNumber);
 }
 
-static toInteger(a:OperandType){
+static toInteger<T>(a:T){
+    const turnedNumber = Math.floor(Number(a));
+
+    if(isNaN(turnedNumber)) throw new Error("Wrong type of data provided, the element is Not a number");
+
     return Math.floor(Number(a));
 }
 
@@ -42,7 +52,7 @@ a = this.toInteger(a);
 b = this.toInteger(b);
 
   while (b !== 0) {
-    const temp = b;
+    const temp:OperandType= b;
     b = this.toInteger(this.modulo(a,b,outputType));
     a = temp;
   }
