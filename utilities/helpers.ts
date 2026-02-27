@@ -2,7 +2,7 @@ import { modularMath } from "./modularMaths";
 
 
 
-interface StringToBinaryOutput {
+export interface StringToBinaryOutput {
     binaryArray:number[],
     text:string
 }
@@ -17,7 +17,7 @@ static turnIntoBinary(input:number | bigint):string{
    if (input === 0) return "0";
     if (input === 1) return "1";
 
-    return this.turnIntoBinary(Math.floor(modularMath.toInteger(input)/ 2)) + (modularMath.toInteger(input) % 2).toString();
+    return `${this.turnIntoBinary(Math.floor(modularMath.toInteger(input)/ 2)) + (modularMath.toInteger(input) % 2).toString()}`;
 }
 
 static turnStringIntoBinary(input:string):StringToBinaryOutput {
@@ -34,7 +34,7 @@ while(input.length > letterIndex){
     let letterASCI = input.charCodeAt(letterIndex); 
     let binaryResult = this.turnIntoBinary(letterASCI);
     result.binaryArray.push(modularMath.toInteger(binaryResult));
-    result.text += binaryResult;
+    result.text += `${binaryResult} `;
     letterIndex++;
 }
 

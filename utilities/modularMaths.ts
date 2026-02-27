@@ -7,16 +7,16 @@ export class modularMath{
 
 constructor(){}
 
-static toBigInt<T>(a:T):bigint{
-    if(typeof a === 'string') throw new Error("Wrong type of data provided, the element is Not a number");
+static toBigInt(a:BigIntCompliance):bigint{
     
     const turnedNumber =  BigInt(a as BigIntCompliance);
 
     return BigInt(turnedNumber);
 }
 
-static toInteger<T>(a:T){
-    const turnedNumber = Math.floor(Number(a));
+static toInteger(a:string | bigint | number){    
+    const turnedNumber = Number(a);
+
 
     if(isNaN(turnedNumber)) throw new Error("Wrong type of data provided, the element is Not a number");
 

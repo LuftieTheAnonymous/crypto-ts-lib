@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-     "test": "tsx --test 'tests/**/*.test.ts'",
+    "test": "tsx --test 'tests/**/*.test.ts'",
     "test:file": "tsx tests/utilities/index.test.ts",
     "start": "tsx index.ts",
     "dev": "tsx index.ts"
@@ -27,6 +27,7 @@
     "@types/chai": "^5.2.3",
     "@types/mocha": "^10.0.10",
     "chai": "^6.2.2",
+    "crypto": "^1.0.1",
     "mocha": "^11.7.5",
     "tsc": "^2.0.4"
   },
