@@ -26,6 +26,7 @@ export class OTP{
     constructor(){}
 
     private static generateKey(keyLength:number):KeyGenerationOutput{
+        // Take an array of length 
         const arrayForRandomValue = new Uint8Array(keyLength);
         const randomlyGeneratedValue = crypto.getRandomValues(arrayForRandomValue);
 
@@ -33,7 +34,7 @@ export class OTP{
         let binaryResult:string="";
 
         for (let index = 0; index < randomlyGeneratedValue.length; index++) {
-            const pseudoRandomNumberToBinary = Helpers.turnIntoBinary(randomlyGeneratedValue[index]);
+            const pseudoRandomNumberToBinary = Helpers.turnIntoBinary(randomlyGeneratedValue[index]).padStart(8,"0");
             const character = String.fromCharCode(randomlyGeneratedValue[index]);
             binaryResult += pseudoRandomNumberToBinary;
             textResult += character;
@@ -45,6 +46,11 @@ export class OTP{
             text:textResult
         }
         
+    }
+
+    static generateKey1(keyLength:number):KeyGenerationOutput{
+        return this.generateKey(keyLength);
+
     }
 
     static encrypt(input:OTPInput): EncryptionOutput{
@@ -72,6 +78,7 @@ export class OTP{
             }
         }
 
+
         let splitIndex:number=0;
         let cipherAsciiIndecies:number[]=[];
 
@@ -80,11 +87,16 @@ export class OTP{
             cipherAsciiIndecies.push(splitBinaryPart);
             splitIndex += 8;
         }
+        
+
+        console.log(cipherAsciiIndecies, 'cipher indicies');
 
         for (let index = 0; index < cipherAsciiIndecies.length; index++) {
+            console.log(index);
             cipherText += String.fromCharCode(cipherAsciiIndecies[index]);
         }
 
+        console.log(cipherText, cipherTextInBinary, "ciphertext + binary");
         
         
         return {
@@ -144,14 +156,17 @@ static decrypt(cipher: string, key: KeyGenerationOutput, outputType: 'string' | 
 
 
 }
-const encryptedMessage = OTP.encrypt("1455");
 
-console.log(encryptedMessage);
+
+
+const encryptedMessage = OTP.encrypt("Jobited is the best crypto community");
+
+
 
 console.log(encryptedMessage.cipher.length, "cipher length");
 console.log(encryptedMessage.cipherTextInBinary.length, "cipher in binary");
 console.log(encryptedMessage.key.keyInBinary.length, "Key in binary length");
-console.log(encryptedMessage.key.text, "key in binary length");
+console.log(encryptedMessage.key.text.length, "key in binary length");
 
 const decryptedMessage = OTP.decrypt(encryptedMessage.cipherTextInBinary, encryptedMessage.key, 'string');
 
