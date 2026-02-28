@@ -28,16 +28,23 @@ export class OTP{
     constructor(){}
 
     private static generateKey(keyLength:number):KeyGenerationOutput{
-        // Take an array of length 
+        // Take an array of length of the input 
         const arrayForRandomValue = new Uint8Array(keyLength);
+
+        // generate random array with values
         const randomlyGeneratedValue = crypto.getRandomValues(arrayForRandomValue);
 
+        // A cipher in "human-readable" version
         let textResult:string="";
+        // A cipher in binary
         let binaryResult:string="";
 
         for (let index = 0; index < randomlyGeneratedValue.length; index++) {
+            // If the turned binary is less than 8 bits long, pad with 0s
             const pseudoRandomNumberToBinary = Helpers.turnIntoBinary(randomlyGeneratedValue[index]).padStart(8,"0");
+            // Get the ASCI character
             const character = String.fromCharCode(randomlyGeneratedValue[index]);
+            // Add respectively to appropriate variables.
             binaryResult += pseudoRandomNumberToBinary;
             textResult += character;
         }
@@ -50,27 +57,25 @@ export class OTP{
         
     }
 
-    static generateKey1(keyLength:number):KeyGenerationOutput{
-        return this.generateKey(keyLength);
-
-    }
-
     static encrypt(input:OTPInput): EncryptionOutput{
+        // Convert input to string
         const convertedInput = input.toString();
+        // generate the key
         const keyGenerated = this.generateKey(convertedInput.length);
 
         let cipherText:string='';
         let cipherTextInBinary:string='';
 
-        console.log(keyGenerated.text.length === convertedInput.length, "is key equal length to the key");
-
+        // run a loop with turned into binary ASCII codes of the leter
         for (let index = 0; index < keyGenerated.text.length; index++) {
             let keyBinary = Helpers.turnIntoBinary(keyGenerated.asciiIndecies[index]);
             let inputBinary = Helpers.turnIntoBinary(convertedInput.charCodeAt(index)); 
 
+            // padd the results with 0s if less than 8 characters (0s or 1s) long
             keyBinary = keyBinary.padStart(8, "0");
             inputBinary = inputBinary.padStart(8, "0");
             
+            // XOR particular bits and add to cipherTextInBinary variable
             for (let j = 0; j < 8; j++) {
                 const inputBit = inputBinary[j];
                 const keyBit = keyBinary[j];
@@ -84,6 +89,7 @@ export class OTP{
         let splitIndex:number=0;
         let cipherAsciiIndecies:number[]=[];
 
+        // Split the binary text into an array with ascii decimals
         while(splitIndex < cipherTextInBinary.length){
             let splitBinaryPart = Helpers.turnBinaryToDecimal(Number(cipherTextInBinary.slice(splitIndex, splitIndex + 8)));
             cipherAsciiIndecies.push(splitBinaryPart);
@@ -91,14 +97,11 @@ export class OTP{
         }
         
 
-        console.log(cipherAsciiIndecies, 'cipher indicies');
-
+        // Find character for each ascii code and add to cipherText
         for (let index = 0; index < cipherAsciiIndecies.length; index++) {
             console.log(index);
             cipherText += String.fromCharCode(cipherAsciiIndecies[index]);
         }
-
-        console.log(cipherText, cipherTextInBinary, "ciphertext + binary");
         
         
         return {
@@ -146,9 +149,12 @@ static decrypt(cipher: string, key: KeyGenerationOutput, outputType: 'string' | 
             return { key, 'plaintext': plaintextOutput };
         }
         case 'bigint': {
+            if(isNaN(modularMath.toInteger(plaintextOutput))) throw new Error("Input is a string with letters, could not turn into decimal number. Select string as output type.");
+            
             return { key, 'plaintext': modularMath.toBigInt(plaintextOutput) };
         }
         case 'integer': {
+            if(isNaN(modularMath.toInteger(plaintextOutput))) throw new Error("Input is a string with letters, could not turn into decimal number. Select string as output type.");
             return { key, 'plaintext': modularMath.toInteger(plaintextOutput) };
         }
         default:
@@ -158,18 +164,3 @@ static decrypt(cipher: string, key: KeyGenerationOutput, outputType: 'string' | 
 
 
 }
-
-
-
-const encryptedMessage = OTP.encrypt("Jobited is the best crypto community");
-
-
-
-console.log(encryptedMessage.cipher.length, "cipher length");
-console.log(encryptedMessage.cipherTextInBinary.length, "cipher in binary");
-console.log(encryptedMessage.key.keyInBinary.length, "Key in binary length");
-console.log(encryptedMessage.key.text.length, "key in binary length");
-
-const decryptedMessage = OTP.decrypt(encryptedMessage.cipherTextInBinary, encryptedMessage.key, 'string');
-
-console.log(decryptedMessage);
