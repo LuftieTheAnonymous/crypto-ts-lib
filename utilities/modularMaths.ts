@@ -95,15 +95,13 @@ static EEA(r0:bigint, r1:bigint):EEAOutput{
         while (this.toInteger(m) !== 1){
             if(this.toInteger(m) % this.toInteger(divisor) !== 0){
                 divisor++
-            }else{
+            }
+            
+            else{
             m = this.toInteger(m) / divisor;
-            if(!result[divisor]){
-                result[divisor]=1;
-            }else{
-                result[divisor]++;
-            }
-
-            }
+        
+            !result[divisor] ? result[divisor]=1 : result[divisor]++;    
+        }
         }
         
 
@@ -123,4 +121,4 @@ static EEA(r0:bigint, r1:bigint):EEAOutput{
 }
 
 
-console.log(modularMath.EulerPhiFunction(2 ** 40), "modular math calculations");
+console.log(modularMath.EulerPhiFunction(2 ** 90), "modular math calculations");
