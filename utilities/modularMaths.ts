@@ -2,7 +2,16 @@ export type OperandType = number | bigint;
 
 export type BigIntCompliance = string | number | boolean | bigint;
 
+export interface EEAOutput{
+    t: OperandType,
+    s: OperandType,
+    gcd: OperandType,
+}
+
 export class modularMath{
+static euclidianAlgorithm(arg0: bigint, arg1: bigint): any {
+    throw new Error("Method not implemented.");
+}
 
 
 constructor(){}
@@ -46,27 +55,51 @@ if (typeof input === 'object') return BigInt(input.reduce((a,b)=> this.toBigInt(
 return this.toBigInt(input) % modulus;
 }
 
-static getGCD(a:OperandType, b:OperandType,outputType?: "bigint" | "integer"):OperandType
-{
-a = this.toInteger(a);
-b = this.toInteger(b);
+static getGCD(r0:OperandType, r1:OperandType,outputType?: "bigint" | "integer"):OperandType {
 
-  while (b !== 0) {
-    const temp:OperandType= b;
-    b = this.toInteger(this.modulo(a,b,outputType));
-    a = temp;
-  }
+    if(r1 === 0) return r0;
 
-    if(!outputType || outputType === 'bigint') return this.toBigInt(a);
-     return this.toInteger(a);
+    const temp:OperandType= r1;
+    r1 = this.toInteger(r0) % this.toInteger(r1);
+    r0 = temp;
+  
+
+  return outputType === 'integer' ? this.getGCD(r0, r1, outputType) : this.toBigInt(this.getGCD(r0, r1, outputType));
+}
+
+static EEA(r0:bigint, r1:bigint):EEAOutput{
+ // BASE CASE
+    if (r1 === 0n) {
+        return { gcd: r0, s: 1n, t: 0n }
+    }
+    
+    // BEFORE RECURSION: calculate quotient and remainder
+    let q:bigint = r0 / r1;
+    let rem:bigint = r0 % r1;
+
+    let result = this.EEA(r1, rem);
+    
+    let s = this.toBigInt(result.t);                    
+    let t = this.toBigInt(result.s) - q * this.toBigInt(result.t);     
+    
+    return { gcd: result.gcd, s: s, t: t }
+
+}
+
+static EulerPhiFunction(m:OperandType):bigint{
+    let primeElementAmount:bigint = 0n;
+
+    let convertedM =this.toInteger(m);
+
+    for (let number = 1; number < convertedM; number++) {
+        let gcdResult = this.getGCD(number,convertedM, 'integer'); 
+        if(gcdResult === 1) primeElementAmount++;
+    }
+
+    return primeElementAmount;
+}
+
 }
 
 
-static EEA(){
-    // To be implemented !
-}
-
-
-}
-
-
+console.log(modularMath.EulerPhiFunction(240));
