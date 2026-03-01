@@ -86,20 +86,41 @@ static EEA(r0:bigint, r1:bigint):EEAOutput{
 
 }
 
-static EulerPhiFunction(m:OperandType):bigint{
-    let primeElementAmount:bigint = 0n;
 
-    let convertedM =this.toInteger(m);
+    private static findPhiExponents(m:OperandType):Record<number, number>{
+        let result:Record<number, number>={};
+        let divisor:number = 2;
+     
+        
+        while (this.toInteger(m) !== 1){
+            if(this.toInteger(m) % this.toInteger(divisor) !== 0){
+                divisor++
+            }else{
+            m = this.toInteger(m) / divisor;
+            if(!result[divisor]){
+                result[divisor]=1;
+            }else{
+                result[divisor]++;
+            }
 
-    for (let number = 1; number < convertedM; number++) {
-        let gcdResult = this.getGCD(number,convertedM, 'integer'); 
-        if(gcdResult === 1) primeElementAmount++;
+            }
+        }
+        
+
+    return result;
     }
 
-    return primeElementAmount;
-}
+    static EulerPhiFunction(m:OperandType):bigint{
+        const exponents= this.findPhiExponents(m);
+        let result:bigint=1n;
+        for (const base in exponents) {
+        result *= this.toBigInt((this.toInteger(base) ** exponents[base]) - (this.toInteger(base) ** (exponents[base] - 1)));
+        }
+
+        return result;
+    }
 
 }
 
 
-console.log(modularMath.EulerPhiFunction(240));
+console.log(modularMath.EulerPhiFunction(2 ** 40), "modular math calculations");
