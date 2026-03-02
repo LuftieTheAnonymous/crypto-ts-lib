@@ -1,1 +1,5 @@
-class ElgamalDLPCipher{}
+export class ElgamalDLP{
+
+    constructor(){}
+
+}

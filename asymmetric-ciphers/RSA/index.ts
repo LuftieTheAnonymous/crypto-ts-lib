@@ -1,1 +1,1 @@
-class RSA {}
+export class RSA {}

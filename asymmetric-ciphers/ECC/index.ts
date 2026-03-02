@@ -1,3 +1,3 @@
-class ElypticCurve {
+export class ElypticCurve {
  constructor(){}
 }
