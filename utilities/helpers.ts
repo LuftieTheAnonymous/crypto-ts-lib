@@ -1,4 +1,4 @@
-import { modularMath } from "./modularMaths";
+import { BigIntCompliance, modularMath, OperandType } from "./modularMaths";
 
 
 
@@ -70,4 +70,30 @@ for (let index = 0; index < input.length; index++) {
 return result;
 }
 
+static turnToHex(input: OperandType):string{
+    let possibleCharacters="0123456789ABCDEF"
+    let binaryResult:string = this.turnIntoBinary(input);
+    let nibbles:number[]=[];
+    
+    let index:number=0;
+    while (index < binaryResult.length) {
+        let nibble:string=binaryResult.slice(index, index + 4).padStart(4, "0");
+            nibbles.push(modularMath.toInteger(nibble));
+            index += 4;
+    }
+  
+    let hexResult:string="0x";
+    let arrayIndex=0;
+
+    while (arrayIndex !== nibbles.length) {
+        let decimalNibble = this.turnBinaryToDecimal(nibbles[arrayIndex]);
+        hexResult += possibleCharacters[decimalNibble];
+        arrayIndex++;
+    }
+
+    return hexResult;
 }
+
+}
+
+console.log(Helpers.turnToHex(255));

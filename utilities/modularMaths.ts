@@ -121,4 +121,4 @@ static EEA(r0:bigint, r1:bigint):EEAOutput{
 }
 
 
-console.log(modularMath.EulerPhiFunction(2 ** 90), "modular math calculations");
+
