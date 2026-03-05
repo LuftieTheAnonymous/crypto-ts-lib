@@ -71,6 +71,8 @@ return result;
 }
 
 static turnToHex(input: OperandType):string{
+    if(input < 0) throw Error("Value cannot be less than 0");
+
     let possibleCharacters="0123456789ABCDEF"
     let binaryResult:string = this.turnIntoBinary(input);
     let nibbles:number[]=[];
