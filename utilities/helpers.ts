@@ -91,5 +91,3 @@ static turnToHex(input: OperandType):string{
 }
 
 }
-
-(Helpers.turnToHex(256));
