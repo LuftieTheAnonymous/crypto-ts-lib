@@ -75,22 +75,16 @@ static turnToHex(input: OperandType):string{
 
     let possibleCharacters="0123456789ABCDEF"
     let binaryResult:string = this.turnIntoBinary(input);
-    let nibbles:number[]=[];
-    
-    let index:number=0;
-    while (index < binaryResult.length) {
-        let nibble:string=binaryResult.slice(index, index + 4).padStart(4, "0");
-            nibbles.push(modularMath.toInteger(nibble));
-            index += 4;
-    }
-  
     let hexResult:string="0x";
     let arrayIndex=0;
+    
+    binaryResult = binaryResult.padStart(Math.ceil(binaryResult.length / 4) * 4, "0");
 
-    while (arrayIndex !== nibbles.length) {
-        let decimalNibble = this.turnBinaryToDecimal(nibbles[arrayIndex]);
+    while (arrayIndex !== binaryResult.length) {
+        let nibble = binaryResult.slice(arrayIndex, arrayIndex + 4);
+        let decimalNibble = parseInt(nibble, 2);
         hexResult += possibleCharacters[decimalNibble];
-        arrayIndex++;
+        arrayIndex+=4;
     }
 
     return hexResult;
@@ -98,4 +92,4 @@ static turnToHex(input: OperandType):string{
 
 }
 
-console.log(Helpers.turnToHex(255));
+(Helpers.turnToHex(256));
